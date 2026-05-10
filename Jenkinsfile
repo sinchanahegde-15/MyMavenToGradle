@@ -1,47 +1,24 @@
 pipeline {
-    agent any  // Use any available agent
+    agent any
 
-    tools {
-        gradle 'Gradle'  // Ensure this matches the name configured in Jenkins
-        jdk 'JDK'
-    }
     stages {
-        stage('Checkout') {
+
+        stage('Clone') {
             steps {
-                git branch: 'master', url: 'https://github.com/sinchanahegde-15/MyMavenToGradle.git'
+                git 'https://github.com/sinchanahegde-15/MyMavenToGradle.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'gradle build'  // Run Gradle build
+                sh 'mvn clean package'
             }
         }
 
-        stage('Test') {
+        stage('Run') {
             steps {
-                sh 'gradle test'  // Run unit tests
+                sh 'java -jar target/*.jar'
             }
-        }
-
-        
-        
-       
-        stage('Run Application') {
-            steps {
-                // Start the JAR application
-                sh 'gradle run'
-            }
-        }
-
-        
-    }
-
-    post {
-        success {
-            echo 'Build and deployment successful!'
-        }
-        failure {
-            echo 'Build failed!'
         }
     }
+}
