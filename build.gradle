@@ -1,20 +1,23 @@
-apply plugin: 'java'
-apply plugin: 'maven'
+plugins {
+    id 'java'
+    id 'application'
+}
 
 group = 'com.example'
 version = '1.0-SNAPSHOT'
 
-description = """MyMavenApp"""
-
-sourceCompatibility = 11
-targetCompatibility = 11
-
-
-
 repositories {
-        
-     maven { url "https://repo.maven.apache.org/maven2" }
+    mavenCentral()
 }
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version:'3.8.1'
+
+    implementation 'org.seleniumhq.selenium:selenium-java:4.29.0'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+
+    testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    mainClass = 'com.example.App'
 }
